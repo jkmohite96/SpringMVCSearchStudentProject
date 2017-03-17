@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,12 +28,30 @@ public class StudentController {
 	public String showSearchStudentsPage() {
 		return "/WEB-INF/pages/searchStudents.jsp";
 	}
+	
+	/*
+	 * 	@RequestMapping(value = "/persons", method = RequestMethod.GET)
+	public String listPersons(Model model) {
+		model.addAttribute("person", new Person());
+		model.addAttribute("listPersons", this.personService.listPersons());
+		return "person";
 
+*/
+	@RequestMapping(value = "/students", method = RequestMethod.GET)
+	public String listStudents(Model model) {
+		
+		model.addAttribute("student", new StudentEntity());
+		model.addAttribute("listStudents",this.studentService.listStudents());
+		return "registration";
+	
+	}
+	
 	@RequestMapping(value = "/saveStudent", method = RequestMethod.POST)
-	public ModelAndView saveStudent(@ModelAttribute("studentbean") StudentBean studentbean, BindingResult result) {
+	public String saveStudent(@ModelAttribute("studentbean") StudentBean studentbean, BindingResult result) {
 		StudentEntity studententity = prepareModel(studentbean);
 		studentService.addStudent(studententity);
-		return new ModelAndView("redirect:/registration.html");
+	//	return new ModelAndView("redirect:/registration.html");
+		return "redirect:/students";
 	}
 
 	private StudentEntity prepareModel(StudentBean studentbean) {
@@ -43,6 +62,7 @@ public class StudentController {
 		studententity.setAge(studentbean.getAge());
 		studententity.setQualification(studentbean.getQualification());
 		studententity.setYop(studentbean.getYop());
+		studententity.setGender(studentbean.getGender());
 
 		return studententity;
 	}
@@ -52,7 +72,7 @@ public class StudentController {
 		return "/WEB-INF/pages/registration.jsp";
 	}
 
-	@RequestMapping(value = "searchStudents", method = RequestMethod.POST)
+/*	@RequestMapping(value = "searchStudents", method = RequestMethod.POST)
 	public ModelAndView searchStudents(@RequestParam("studentId") Integer studentId, @RequestParam("name") String name,
 			@RequestParam("course") String course, @RequestParam("mobile") String mobile) {
 		SearchParams searchParams = new SearchParams();
@@ -66,5 +86,5 @@ public class StudentController {
 		modelAndView.addObject("searchResultsList", searchResultsList);
 
 		return modelAndView;
-	}
+	}*/
 }

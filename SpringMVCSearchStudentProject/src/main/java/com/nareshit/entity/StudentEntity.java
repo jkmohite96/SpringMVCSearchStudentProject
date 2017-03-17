@@ -3,7 +3,7 @@ package com.nareshit.entity;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "StudentRegi")
+@Table(name = "StudentTable")
 public class StudentEntity {
 
 	@Id
@@ -20,6 +20,17 @@ public class StudentEntity {
 	private String qualification;
 	@Column
 	private int yop;
+	@Column
+	private String gender;
+
+	
+	
+	public String getGender() {
+		return gender;
+	}
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 	public int getId() {
 		return id;
 	}
@@ -56,13 +67,10 @@ public class StudentEntity {
 	public void setYop(int yop) {
 		this.yop = yop;
 	}
-	
 	@Override
 	public String toString() {
 		return "StudentEntity [id=" + id + ", fullname=" + fullname + ", address=" + address + ", age=" + age
-				+ ", qualification=" + qualification + ", yop=" + yop + "]";
+				+ ", qualification=" + qualification + ", yop=" + yop + ", gender=" + gender + "]";
 	}
-	
-	
 	
 }
